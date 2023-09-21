@@ -1,15 +1,15 @@
 # nahkd's File structures index
+## Index
+- Minecraft Schematics
+    - Axiom Blueprint: [v1](includes/mc-schematic/axiom-blueprint-v1/index.md)
+
+> Read further to learn how to install ImHex patterns and read my Markdown docs.
+
 ## Install
 ### ImHex
 0. Clone this repository: `git clone https://github.com/nahkd123/file-structures-index.git`
 0. Add path to `file-structures-index` repository to ImHex: `Extras > Settings > Folders > Add new folder` then put the path to repository.
 0. Enjoy!
-
-## Index
-- Minecraft Schematics
-    - Axiom Blueprint: [v1](includes/mc-schematic/axiom-blueprint-v1/index.md)
-
-> Read further to learn how to read my Markdown docs.
 
 ## Syntax in Markdown
 ### General
