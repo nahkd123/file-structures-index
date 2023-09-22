@@ -36,7 +36,9 @@ mc_schematic::axiom_blueprint_v1::main file @ 0x00;
 - `compound`
     - `compound[] BlockRegion`
         - `compound BlockStates`
-            - `long[] data`: (list length appears to be always 256). **Guess:** Each entry is a sequence of 16 blocks (`long` integers are 8 bytes in size), where each block is a 4-bit integer that points to a block state in palette. That means this could hold 4096 blocks, or an entire cubic chunk (16x16x16 blocks).
+            - `long[] data`: (list length appears to be always 256).
+                - **Under 16 block types:** Each entry is a sequence of 16 blocks (`long` integers are 8 bytes in size), where each block is a 4-bit integer that points to a block state in palette. That means this could hold 4096 blocks, or an entire cubic chunk (16x16x16 blocks).
+                - **More than 16 block types:** I'm sorry but guessing the structure is too much work to do. If you are interested, consider looking at [test_struct.nbt.gz](./test_struct.nbt.gz) in your NBT viewer + ImHex.
             - `compound[] palette`: A list of block states in a form of palette.
                 - `string Name`: Namespaced IDs (eg: `minecraft:diamond_block` or `my_mod:tiny_potato`).
                 - `//`: It is likely that each entry in `palette` is a block state, so there could be something else other than `Name`, like `Rotation` for example.
