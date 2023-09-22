@@ -13,10 +13,32 @@ mc_schematic::axiom_blueprint_v1::main file @ 0x00;
 - `u8[4] = {0x0A, 0xE5, 0xBB, 0x36}`: Magic number. Is it being used to identify blueprint version?
 - Metadata
     - `be u32 metadataLength`: Length for metadata section.
-    - `u8[metadataLength] => minecraft::nbt metadata`: Metadata content in Minecraft NBT format.
+    - `u8[metadataLength] => minecraft::nbt metadata`: [Metadata](#minecraftnbt-metadata-tree) content in Minecraft NBT format.
 - Preview Image
     - `be u32 previewImgLength`: Length for preview image section.
     - `u8[previewImgLength] => image::png previewImg`: Blueprint preview PNG image.
 - Structure Data
     - `be u32 structureLength`: Length for structure data section.
-    - `u8[structureLength] => compress::gzip => unknown structure`: Structure data. The data itself is gzipped.
+    - `u8[structureLength] => compress::gzip => minecraft::nbt structure`: [Structure data](#minecraftnbt-structure-tree). The data itself is gzipped.
+
+### `minecraft::nbt`: `metadata` tree
+- `compound`
+    - `long Version`: Version of the blueprint. Currently `0`.
+    - `string Author`: Author of this blueprint.
+    - `int BlockCount`: Number of blocks in this blueprint.
+    - `byte LockedThumbnail`
+    - `string Name`: Name of blueprint.
+    - `string[] Tags`: List of tags for this blueprint.
+    - `float ThumbnailPitch`: Thumbnail pitch angle. Can be used to reconstruct thumbnail.
+    - `float ThumbnailYaw`: Thumbnail yaw angle. Can be used to reconstruct thumbnail.
+
+### `minecraft::nbt`: `structure` tree
+- `compound`
+    - `compound[] BlockRegion`
+        - `compound BlockStates`
+            - `long[] data`: (list length appears to be always 256).
+            - `compound[] palette`
+                - `string Name`: Namespaced IDs (eg: `minecraft:diamond_block` or `my_mod:tiny_potato`).
+        - `int X`: Looks like chunk position thing.
+        - `int Y`
+        - `int Z`
