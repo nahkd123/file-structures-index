@@ -25,7 +25,7 @@ mc_schematic::axiom_blueprint_v1::main file @ 0x00;
 - `compound`
     - `long Version`: Version of the blueprint. Currently `0`.
     - `string Author`: Author of this blueprint.
-    - `int BlockCount`: Number of blocks in this blueprint.
+    - `int BlockCount`: Number of blocks in this blueprint. (used for indexing?).
     - `byte LockedThumbnail`
     - `string Name`: Name of blueprint.
     - `string[] Tags`: List of tags for this blueprint.
@@ -36,9 +36,10 @@ mc_schematic::axiom_blueprint_v1::main file @ 0x00;
 - `compound`
     - `compound[] BlockRegion`
         - `compound BlockStates`
-            - `long[] data`: (list length appears to be always 256).
-            - `compound[] palette`
+            - `long[] data`: (list length appears to be always 256). **Guess:** Each entry is a sequence of 16 blocks (`long` integers are 8 bytes in size), where each block is a 4-bit integer that points to a block state in palette. That means this could hold 4096 blocks, or an entire cubic chunk (16x16x16 blocks).
+            - `compound[] palette`: A list of block states in a form of palette.
                 - `string Name`: Namespaced IDs (eg: `minecraft:diamond_block` or `my_mod:tiny_potato`).
-        - `int X`: Looks like chunk position thing.
-        - `int Y`
-        - `int Z`
+                - `//`: It is likely that each entry in `palette` is a block state, so there could be something else other than `Name`, like `Rotation` for example.
+        - `int X`: Cubic chunk position. Multiply this by 16 and you'll get position in blueprint.
+        - `int Y`: Cubic chunk position.
+        - `int Z`: Cubic chunk position.
